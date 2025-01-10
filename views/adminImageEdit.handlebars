@@ -1,0 +1,128 @@
+<div class="container-i">
+  <div class="grid">
+    <div class="grid__row app-content">
+      <div class="grid__column_1">
+        <nav class="category">
+          <a href="/admin" style="text-decoration: none;"><h3
+              class="trademark"
+            >Quản lý đơn hàng</h3></a>
+          <ul class="list-trademark">
+            <li class="name-trademark"><a href="/admin/?day=today">Trong ngày
+                hôm nay</a></li>
+            <li class="name-trademark"><a href="/admin/?day=7day">Trong 7 ngày
+                vừa qua</a></li>
+            <li class="name-trademark"><a href="/admin/?day=all">Cũ hơn</a></li>
+          </ul>
+        </nav>
+        <nav class="category">
+          <a href="/admin/editProduct" style="text-decoration: none;"><h3
+              class="trademark"
+            >Quản lý sản phẩm</h3></a>
+          <ul class="list-trademark">
+            <li class="name-trademark"><a href="/admin/editProduct">Danh sách
+                sản phẩm</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div class="container-i">
+        {{#each this.categories}}
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="/admin/editProduct/{{productID}}/imageEdit"
+          >
+            <div class="container_content">
+              <div class="section_header">
+                <div class="container_section_header">
+                  <h2 class="section_title">Hình ảnh mã sản phẩm
+                    {{productID}}</h2>
+                </div>
+              </div>
+
+              <a
+                href="/admin/editProduct/{{productID}}"
+                style="text-decoration: none"
+              >
+                <h2 style="color: yellow">Xem thông tin sản phẩm</h2>
+              </a>
+
+              <div class="product-image-main">
+                <div
+                  class="product-image-0"
+                  style="background-image: url(/img/{{productID}}/{{main}})"
+                ></div>
+                <div class="product-image-main-2">
+                  <input
+                    class="img-main"
+                    type="file"
+                    required
+                    multiple
+                    name="main"
+                  />
+                </div>
+              </div>
+
+              <div class="section-body">
+                <div class="section-body-content">
+                  <div class="image">
+                    <p>
+                      <img src="/img/{{productID}}/{{view1}}" alt="" />
+                      <input
+                        class="img-control"
+                        type="file"
+                        required
+                        multiple
+                        name="view1"
+                      />
+                    </p>
+
+                    <p>
+                      <img src="/img/{{productID}}/{{view2}}" alt="" />
+                      <input
+                        class="img-control"
+                        type="file"
+                        required
+                        multiple
+                        name="view2"
+                      />
+                    </p>
+                    <p>
+                      <img src="/img/{{productID}}/{{view3}}" alt="" />
+                      <input
+                        class="img-control"
+                        type="file"
+                        required
+                        multiple
+                        name="view3"
+                      />
+                    </p>
+
+                    <p>
+                      <img src="/img/{{productID}}/{{view4}}" alt="" />
+                      <input
+                        class="img-control"
+                        type="file"
+                        required
+                        multiple
+                        name="view4"
+                      />
+                    </p>
+
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="button_update">
+                <button class="btn-add">Cập nhật</button>
+              </div>
+
+            </div>
+          </form>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

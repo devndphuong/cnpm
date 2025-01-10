@@ -1,0 +1,177 @@
+  {{#section 'js'}}
+  <script>
+    var select = document.getElementsByClassName('form-control')[4].id;
+    var slt = document.getElementById(select);
+    slt.selectedIndex = select - 1;
+
+    $('#content').on('submit', function(event) {
+        event.preventDefault();
+        if (validateOrder()) {
+            if (!validatePhone()) {
+                alert('Không thành công! Số điện thoại không lợp lệ!');
+                
+            } else if (!validateName()){
+                alert('Không thành công! Tên không lợp lệ!'); 
+            } else {
+                if (confirm('Chỉnh sửa xong rồi à?')) {
+                $('#content').off('submit').submit();
+                }
+            }
+        } else {
+            alert('Không thành công! Vui lòng kiểm tra nhập đầy đủ thông tin');
+        }
+    })
+    
+</script>
+{{/section}}
+
+ <div class="container-i">
+        <div class="grid">
+            <div class="grid__row app-content">
+                <div class="grid__column_1">
+                    <nav class="category">
+                        <a href="/admin" style="text-decoration: none;"><h3 class="trademark">Quản lý đơn hàng</h3></a>
+                        <ul class="list-trademark">
+                            <li class="name-trademark"><a href="/admin/?day=today">Trong ngày hôm nay</a></li>
+                            <li class="name-trademark"><a href="/admin/?day=7day">Trong 7 ngày vừa qua</a></li>
+                            <li class="name-trademark"><a href="/admin/?day=all">Cũ hơn</a></li>
+                        </ul>
+                    </nav>
+                    <nav class="category">
+                        <a href="/admin/editProduct" style="text-decoration: none;"><h3 class="trademark">Quản lý sản phẩm</h3></a>
+                        <ul class="list-trademark">  
+                            <li class="name-trademark"><a href="/admin/editProduct">Danh sách sản phẩm</a></li>
+                        </ul>
+                    </nav>
+
+                </div>
+     
+                    <div class="container-i">
+    {{#each this.rows}}
+            <form id="content" method="POST" action="/admin/vieworder/{{orderNumber}}">
+                <div class="container_content">
+                    <div class="section_header" id="header-info">
+                        <div class="container_section_header">
+                            <h2 class="section_title">Thông tin đơn hàng mã {{orderNumber}}</h2>
+                        </div>
+                    </div>
+                    <div class="info-shipping" id="container-shipping">
+                        <div class="col col1" >
+                            <div class="form-group">
+                                <label class="title-info">Họ tên
+                                    <span class="required"></span>
+                                </label>
+                                <input class="form-control" id="name" type="text" name="name" value="{{customerName}}">
+                            </div>
+                            <div class="form-group">
+                                <label class="title-info">Địa chỉ
+                                    <span class="required"></span>
+                                </label>
+                                <input class="form-control" id="address" type="text" name="address" value="{{address}}">
+                            </div>
+                                <div class="form-group">
+                                    <label class="title-info">Số điện thoại
+                                        <span class="required"></span>
+                                    </label>
+                                    <input class="form-control" id="phone" type="text" name="phone" value="{{phone}}">
+                                </div>
+                                <div class="form-group note-shipping">
+                                    <label class="title-info">Ghi chú về đơn hàng</label>
+                                    <input class="form-control" id="note" type="text" name="note" value="{{note}}"></input>
+                                </div>
+                                <div class="form-group note-shipping">
+                                    <label class="title-info" for="{{sta}}">Trạng thái</label>
+                                    <select class="form-control" id="{{sta}}" style="background-color:  #1d1d1d; height : 30px" name="stt">
+                                        <option value="1">Đang xử lý</option>
+                                        <option value="2">Đang giao hàng</option>
+                                        <option value="3">Đã hoàn tất</option>
+                                        <option value="4">Bị hủy</option>
+                                    </select>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="section_header">
+                        <div class="container_section_header">
+                            <h2 class="section_title">Thông tin các sản phẩm đặt hàng</h2>
+                        </div>
+                    </div>
+            {{/each}}
+
+                    <div class="list_orders">
+                        <table class="table_orders">
+                            <thead>
+                                <tr class="title-row">
+                                    <th>Sản phẩm</th>
+                                    <th></th>
+                                    <th>Giá</th>
+                                    <th>Size</th>
+                                    <th>Số lượng</th>
+                                    <th>Trong kho</th>
+                                    <th>Tổng tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each this.order_list}}
+                                <tr class="order_detail">
+                                    <td><a class="image" href=""><img style="width:88px" src="/img/{{productID}}/{{main}}" alt=""></a></td>
+                                    <td class="describe_product">
+                                        <a href="/admin/editProduct/{{productID}}">{{productName}}</a>
+                                    </td>
+                                    <td class="price_product">
+                                        <span>{{format_number priceEach}}đ</span>
+                                    </td>
+                                    <td>
+                                        {{size}}
+                                    </td>
+                                    <td>
+                                        {{quantity}}
+                                    </td>
+                                    {{#if danger}}
+                                    <td style="color: red;">
+                                        {{status}}
+                                    </td>
+                                    {{else}}
+                                        <td>
+                                        {{status}}
+                                    </td>
+                                    {{/if}}
+                                    <td class="price_total">
+                                        <div class="cl--primary" style="color:#ffe11b">{{format_number total}}đ</div>
+                                    </td>
+                                    
+                                    <td class="recycle">
+                                        <a href="/admin/delorder?productID={{productID}}&orderNumber={{orderNumber}}&size={{size}}">
+                                            <button class="btn btn-secondary" type="button" id="deleteOrder" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này khỏi đơn hàng?')">
+                                                <i class="ti-trash"></i><span>Xoá</span>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="shop-total">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Tổng cần thanh toán: </td>
+                                    <td style="color: #ffe11b;">{{format_number sum}} đ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{#if isUpdate}}
+                    <div class="shop-back" id="button-showinfo">
+                        <button class="btn btn-secondary" type="submit">Cập nhật đơn hàng</button>
+                    </div>
+                    {{/if}}
+                </div>
+            </form>
+       </div>
+            </div>
+        </div>
+    </div>

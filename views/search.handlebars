@@ -1,0 +1,101 @@
+{{#section "css"}}
+  <style>
+    .grid__column_2 { width: 100%; }
+  </style>
+
+{{/section}}
+{{#section "js"}}
+  <script>
+    var select = document.getElementsByClassName('select-box')[0].id; var slt =
+    document.getElementById(select); slt.selectedIndex = select;
+  </script>
+{{/section}}
+<div class="container-i" style="padding-top: 20px;">
+  <div class="grid">
+    <div class="grid__row app-content">
+      <div class="grid__column_2">
+        <div class="grid__row grid__full-width">
+          <h1 class="heading-product">Có
+            {{numberOfProduct}}
+            kết quả tìm kiếm cho "{{searchName}}"</h1>
+          <div class="sort-product">
+            <div class="custom-select" style="width:200px;">
+              <select
+                class="select-box"
+                id="{{checked_sort}}"
+                onchange="window.location.href=this.value"
+              >
+                <option
+                  id="0"
+                  value="/search?q={{searchName}}&sort_by=&page=1"
+                >Sắp xếp sản phẩm</option>
+                <option
+                  id="1"
+                  value="/search?q={{searchName}}&sort_by=price-asc&page=1"
+                >Giá: Tăng dần</option>
+                <option
+                  id="2"
+                  value="/search?q={{searchName}}&sort_by=price-desc&page=1"
+                >Giá: Giảm dần</option>
+                <option
+                  id="3"
+                  value="/search?q={{searchName}}&sort_by=title-asc&page=1"
+                >Tên: A-Z</option>
+                <option
+                  id="4"
+                  value="/search?q={{searchName}}&sort_by=title-desc&page=1"
+                >Tên: Z-A</option>
+                <option
+                  id="5"
+                  value="/search?q={{searchName}}&sort_by=best-selling&page=1"
+                >Bán chạy nhất</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="grid__column_10">
+          {{#each this.categories}}
+            <div class="grid__column">
+              <div class="home-product-item">
+                <div
+                  class="home-product-item-img"
+                  style="background-image: url(/img/{{productID}}/{{main}})"
+                ></div>
+                <a
+                  href="/product/view/{{productID}}"
+                  style="text-decoration:none"
+                ><h2 class="home-product-item-name">{{productName}}</h2></a>
+                <div class="home-product-item-price">{{format_number
+                    productPrice
+                  }}đ</div>>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{#if empty}}{{else}}
+      <nav class="nav__pagination">
+        <ul class="pagination">
+          {{#each this.page_number}}
+            {{#if active}}
+              <li class="page_item" style="background: #ffe11b;">
+                <a
+                  class="page_link"
+                  href="/search?q={{searchName}}&sort_by={{sort_by}}&page={{value}}"
+                >{{value}}</a>
+              </li>
+            {{else}}
+              <li class="page_item">
+                <a
+                  class="page_link"
+                  href="/search?q={{searchName}}&sort_by={{sort_by}}&page={{value}}"
+                >{{value}}</a>
+              </li>
+            {{/if}}
+          {{/each}}
+        </ul>
+      </nav>
+    {{/if}}
+  </div>
+</div>

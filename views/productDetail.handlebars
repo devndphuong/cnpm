@@ -1,0 +1,193 @@
+ {{#section 'js'}}
+  <script>
+
+    $('#addtocart').on('submit', function(event) {
+        event.preventDefault();
+        if (sessionStorage.getItem('maxCart') > 3) {
+            alert('Bạn chỉ có thể mua 1 lần tối đa 4 sản phẩm');
+        } else if (!validate()) {
+            alert('Bạn chưa chọn size');
+        } else {
+            $('#addtocart').off('submit').submit();
+        }
+    })
+    
+    function validate () {
+        var ele = document.getElementsByName('variation');
+        for (var i = 0; i < ele.length; i++) {
+            if (ele[i].checked) {
+                return true;
+            }
+        }
+        return false;
+    }
+</script>
+{{/section}}
+ {{#section 'css'}}
+<style>
+.grid__column_2 {
+    width: 100%;
+}
+</style>
+
+ {{/section}}
+
+<div id="content" class="site-content">
+    <div class="container-i">
+    <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Thông tin sản phẩm</h2>
+                    </div>
+                {{#each this.categories}}
+                <div class="row ">
+                    <div class="col-xs-12 col-md-5">
+                        <div class="single-product-img">
+                            <img style="" src="/img/{{productID}}/{{main}}">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-7">
+                        <div class="single-product-summary">
+                            <h1 class="single-product-title">
+                                {{productName}}
+                            </h1>
+                            
+                            <div class="clearfix single-price-tax">
+                                 <div class="single-product-price cl--primary">{{format_number productPrice}}đ</div> 
+                                 <dl class="single-product-tax"> 
+                                     <dt class="single-product-tax--top">Loại đinh: </dt> 
+                                     <dd class="single-product-tax--top"> 
+                                         {{style}}									
+                                    </dd> 
+                                </dl>
+                            </div>
+                            <div class="separator"></div>   
+                          
+
+                            <div style="text-align: justify;" class="single-product-excerpt">
+                            <p>{{productDescription}}</p>
+                            </div>
+                            <div class="separator"></div>  
+
+                        </div>
+                        
+                            {{#if outOfStock}}   
+                                <div style="text-align: justify;" class="outofstock">
+                                <p>Sản phẩm này đã hết hàng</p>
+                                </div>                  
+                            {{else}}
+                            {{#if adminSearchFromOrder}}
+                                <form action="/admin/vieworder/{{orderID}}/product/{{productID}}" class="add-to-cart-form" method="POST" id="addtocart">
+                                <div style="justify-content: space-between  ;" class="clearfix">
+                                    <div class="form-group single-product-size">
+                                        <strong>Chọn size</strong>
+                                        {{#each productDetail}}
+                                            <label>
+                                                <input type="radio" name="variation" value={{size}} id="size" data-quantity="0">
+                                                <span>{{size}}</span>
+                                            </label>
+                                        {{/each}}
+                                            <div class="form-group single-product-quantity">
+                                                <strong>Số lượng</strong>
+                                                <input type="number" min="1" class="form-control quantity" name="quantity" value="1" max="20">
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <button class="btn btn-primary single-product-submit" type="submit">
+                                <i class="ti-shopping-cart"></i>
+                                Thêm vào giỏ hàng  
+                                </button>
+                            </form>
+                            {{else}}
+                            <form action="/product/view/{{productID}}" class="add-to-cart-form" method="POST" id="addtocart">
+                                <div style="justify-content: space-between  ;" class="clearfix">
+                                    <div class="form-group single-product-size">
+                                        <strong>Chọn size</strong>
+                                        {{#each productDetail}}
+                                            <label>
+                                                <input type="radio" name="variation" value={{size}} id="size" data-quantity="0">
+                                                <span>{{size}}</span>
+                                            </label>
+                                        {{/each}}
+                                            <div class="form-group single-product-quantity">
+                                                <strong>Số lượng</strong>
+                                                <input type="number" min="1" class="form-control quantity" name="quantity" value="1" max="20">
+                                            </div>
+                                        </div>
+                                </div>
+
+                                {{#if maxCart}} 
+                                    <div style="text-align: justify; padding-left:30px" class="outofstock">
+                                    <p>Giỏ hàng đã đầy</p>
+                                    </div>
+                                {{else}}
+
+                                <button class="btn btn-primary single-product-submit" type="submit">
+                                <i class="ti-shopping-cart"></i>
+                                Thêm vào giỏ hàng  
+                                </button>
+                                {{/if}}
+                            </form>
+                            {{/if}}
+                            {{/if}}
+                    </div>
+                </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Hình ảnh về sản phẩm</h2>
+                    </div>
+                    <div class="section-body">
+                        <div class="section-body-content">
+                            <div class="image">
+                                <p>
+                                    <img src="/img/{{productID}}/{{view1}}" alt="">
+                                    <p>{{productName}}</p>
+                                </p>
+
+                                <p>
+                                    <img  src="/img/{{productID}}/{{view2}}" alt="">
+                                    <p>{{productName}}</p>
+                                </p>
+                                <p>
+                                    <img  src="/img/{{productID}}/{{view3}}" alt="">
+                                    <p>{{productName}}</p>
+                                </p>
+
+                                <p>
+                                    <img  src="/img/{{productID}}/{{view4}}" alt="">
+                                    <p>{{productName}}</p>
+                                </p>
+
+                            </div>
+                
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+                 <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Có thể bạn thích</h2>
+                    </div>
+                     <div class="grid" style="padding-bottom: 30px;">
+                <div class="grid__row app-content">
+                    <div class="grid__column_2">
+                        <div class="grid__column_10">   
+                          {{#each this.related_product}}              
+                            <div class="grid__column">
+                                <div class="home-product-item">
+                                <div class="home-product-item-img" style="background-image: url(/img/{{productID}}/{{main}})"></div>
+                                <a href="/product/view/{{productID}}" style="text-decoration:none"><h2 class="home-product-item-name">{{productName}}</h2></a>
+                                <div class="home-product-item-price">{{format_number productPrice}}đ</div>
+                                </div>
+                            </div>  
+                          {{/each}}
+                    </div>
+                    </div>  
+                </div>   
+            </div>
+                </div>
+            </div>
+            </div>

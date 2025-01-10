@@ -1,0 +1,286 @@
+{{#section "js"}}
+  <script>
+    let slideIndex = 0; showSlides(); function showSlides() { let i; let slides
+    = document.getElementsByClassName("mySlides"); let dots =
+    document.getElementsByClassName("dot"); for (i = 0; i < slides.length; i++)
+    { slides[i].style.display = "none"; } slideIndex++; if (slideIndex >
+    slides.length) {slideIndex = 1} for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", ""); }
+    slides[slideIndex-1].style.display = "block"; dots[slideIndex-1].className
+    += " active"; setTimeout(showSlides, 2000); // Change image every 2 seconds
+    } var select = document.getElementsByClassName('select-box')[0].id; var slt
+    = document.getElementById(select); slt.selectedIndex = select;
+
+  </script>
+{{/section}}
+
+<div class="slideshow-container" style="padding-top: 30px;">
+
+  <div class="mySlides fade">
+    <a href="/thuong-hieu/Puma"><img
+        src="/img/brand_banner_3.webp"
+        style="width:100%"
+      /></a>
+    <div class="text">Giày bóng đá Puma</div>
+  </div>
+  <div class="mySlides fade">
+    <a href="/thuong-hieu/Mizuno"><img
+        src="/img//brand_banner_4.webp"
+        style="width:100%"
+      /></a>
+    <div class="text">Giày bóng đá Mizuno</div>
+  </div>
+  <div class="mySlides fade">
+    <a href="/thuong-hieu/Adidas"><img
+        src="/img/slideshow_2.webp"
+        style="width:100%"
+      /></a>
+    <div class="text">Giày bóng đá Adidas</div>
+  </div>
+  <div class="mySlides fade">
+    <a href="/thuong-hieu/Nike"><img
+        src="/img/slideshow_3.webp"
+        style="width:100%"
+      /></a>
+    <div class="text">Giày bóng đá Nike</div>
+  </div>
+  <div class="mySlides fade">
+    <a href="/thuong-hieu/Kamito"><img
+        src="/img/brand_banner_6.webp"
+        style="width:100%"
+      /></a>
+    <div class="text">Giày bóng đá Kamito</div>
+  </div>
+</div>
+<br />
+
+<div style="text-align:center">
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+
+<div class="container-i" style="padding-top: 20px;">
+  <div class="grid">
+    <div class="grid__row app-content">
+      <div class="grid__column_1">
+        <nav class="category">
+          <div class="trademark">
+            Thương hiệu
+          </div>
+          <ul class="list-trademark">
+            {{#if home}}
+              <li class="name-trademark"><a
+                  href="/thuong-hieu/Nike"
+                >Nike</a></li>
+              <li class="name-trademark"><a
+                  href="/thuong-hieu/Adidas"
+                >Adidas</a></li>
+              <li class="name-trademark"><a
+                  href="/thuong-hieu/Puma"
+                >Puma</a></li>
+              <li class="name-trademark"><a
+                  href="/thuong-hieu/Mizuno"
+                >Mizuno</a></li>
+              <li class="name-trademark"><a
+                  href="/thuong-hieu/Kamito"
+                >Kamito</a></li>
+            {{else}}
+              {{#each list_brand}}
+                {{#if active}}
+                  <li class="name-trademark"><a
+                      style="color: #ffe11b;"
+                      href="/thuong-hieu/{{value}}?sort_by=&page=1"
+                    >{{value}}</a></li>
+                {{else}}
+                  <li class="name-trademark"><a
+                      href="/thuong-hieu/{{value}}?sort_by=&page=1"
+                    >{{value}}</a></li>
+                {{/if}}
+              {{/each}}
+            {{/if}}
+          </ul>
+        </nav>
+        <nav class="category">
+          <div class="trademark">
+            Loại đinh
+          </div>
+          <ul class="list-trademark">
+            {{#if home}}
+              <li class="name-trademark"><a
+                  href="/thuong-hieu/all?loaidinh=cỏ nhân tạo"
+                >Sân cỏ nhân tạo</a></li>
+              <li class="name-trademark"><a
+                  href="/thuong-hieu/all?loaidinh=cỏ tự nhiên"
+                >Sân cỏ tự nhiên</a></li>
+            {{else}}
+              {{#each list_style}}
+                {{#if active}}
+                  <li class="name-trademark"><a
+                      style="color: #ffe11b;"
+                      href="/thuong-hieu/{{brand}}?loaidinh={{value}}&sort_by=&page=1"
+                    >Sân {{value}}</a></li>
+                {{else}}
+                  <li class="name-trademark"><a
+                      href="/thuong-hieu/{{brand}}?loaidinh={{value}}&sort_by=&page=1"
+                    >Sân {{value}}</a></li>
+                {{/if}}
+              {{/each}}
+            {{/if}}
+          </ul>
+        </nav>
+      </div>
+
+      <div class="grid__column_2">
+        <div class="grid__row grid__full-width">
+          <h1 class="heading-product">Danh sách sản phẩm</h1>
+          <div class="sort-product">
+            <div class="custom-select" style="width:200px;">
+              <select
+                class="select-box"
+                id="{{checked_sort}}"
+                onchange="window.location.href=this.value"
+              >
+                {{#if home}}
+                  <option id="0" value="/?page=1">Sắp xếp sản phẩm</option>
+                  <option id="1" value="/?sort_by=price-asc&page=1">Giá: Tăng
+                    dần</option>
+                  <option id="2" value="/?sort_by=price-desc&page=1">Giá: Giảm
+                    dần</option>
+                  <option id="3" value="/?sort_by=title-asc&page=1">Tên: A-Z</option>
+                  <option id="4" value="/?sort_by=title-desc&page=1">Tên: Z-A</option>
+                  <option id="5" value="/?sort_by=best-selling&page=1">Bán chạy
+                    nhất</option>
+                {{else}}
+                  <option
+                    id="0"
+                    value="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by=&page=1"
+                  >Sắp xếp sản phẩm</option>
+                  <option
+                    id="1"
+                    value="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by=price-asc&page=1"
+                  >Giá: Tăng dần</option>
+                  <option
+                    id="2"
+                    value="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by=price-desc&page=1"
+                  >Giá: Giảm dần</option>
+                  <option
+                    id="3"
+                    value="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by=title-asc&page=1"
+                  >Tên: A-Z</option>
+                  <option
+                    id="4"
+                    value="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by=title-desc&page=1"
+                  >Tên: Z-A</option>
+                  <option
+                    id="5"
+                    value="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by=best-selling&page=1"
+                  >Bán chạy nhất</option>
+                {{/if}}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid__column_10" id="products">
+          {{#each this.categories}}
+            <div class="grid__column">
+              <div class="home-product-item">
+                <div
+                  class="home-product-item-img"
+                  style="background-image: url(/img/{{productID}}/{{main}})"
+                ></div>
+                <a
+                  href="/product/view/{{productID}}"
+                  style="text-decoration:none"
+                ><h2 class="home-product-item-name">{{productName}}</h2></a>
+                <div class="home-product-item-price">{{format_number
+                    productPrice
+                  }}đ</div>>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{#if empty}}{{else}}
+      <nav class="nav__pagination">
+        <ul class="pagination">
+
+          {{#if home}}
+            {{#if start}}
+              <li class="page_item">
+                <a class="page_link" href="/?sort_by={{sort_by}}&page=1"><i
+                    class="ti-angle-double-left"
+                  ></i></a>
+              </li>
+            {{/if}}
+            {{#each this.page_number}}
+              {{#if active}}
+                <li class="page_item" style="background: #ffe11b;">
+                  <a
+                    class="page_link"
+                    href="/?sort_by={{sort_by}}&page={{value}}"
+                  >{{value}}</a>
+                </li>
+              {{else}}
+                <li class="page_item">
+                  <a
+                    class="page_link"
+                    href="/?sort_by={{sort_by}}&page={{value}}"
+                  >{{value}}</a>
+                </li>
+              {{/if}}
+            {{/each}}
+            {{#if end}}
+              <li class="page_item">
+                <a
+                  class="page_link"
+                  href="/?sort_by={{sort_by}}&page={{numberPage}}"
+                ><i class="ti-angle-double-right"></i></a>
+              </li>
+            {{/if}}
+
+          {{else}}
+            {{#if start}}
+              <li class="page_item">
+                <a
+                  class="page_link"
+                  href="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by={{sort_by}}&page=1"
+                ><i class="ti-angle-double-left"></i></a>
+              </li>
+            {{/if}}
+            {{#each this.page_number}}
+              {{#if active}}
+                <li class="page_item" style="background: #ffe11b;">
+                  <a
+                    class="page_link"
+                    href="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by={{sort_by}}&page={{value}}"
+                  >{{value}}</a>
+                </li>
+              {{else}}
+                <li class="page_item">
+                  <a
+                    class="page_link"
+                    href="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by={{sort_by}}&page={{value}}"
+                  >{{value}}</a>
+                </li>
+              {{/if}}
+            {{/each}}
+            {{#if end}}
+              <li class="page_item">
+                <a
+                  class="page_link"
+                  href="/thuong-hieu/{{brand}}?loaidinh={{loaidinh}}&sort_by={{sort_by}}&page={{numberPage}}"
+                ><i class="ti-angle-double-right"></i></a>
+              </li>
+            {{/if}}
+          {{/if}}
+
+        </ul>
+      </nav>
+    {{/if}}
+  </div>
+</div>
