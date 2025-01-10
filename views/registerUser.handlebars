@@ -1,0 +1,48 @@
+<div class="container-login">
+  <form class="myform" method="POST" action="/account/register">
+    <h2>Đăng ký tài khoản</h2>
+    {{#if err}}
+      <div class="alert alert-danger" role="alert">
+        <h2 style="font-size: 16px;">{{msg}}</h2>
+      </div>
+    {{/if}}
+
+    <input
+      type="text"
+      placeholder="Họ và tên"
+      name="fullname"
+      style="padding-left: 20px;"
+    />
+    <input
+      type="text"
+      placeholder="Tên tài khoản"
+      name="username"
+      style="padding-left: 20px;"
+    />
+    <input
+      type="password"
+      placeholder="Mật khẩu"
+      name="password"
+      style="padding-left: 20px;"
+    />
+    <input
+      type="text"
+      placeholder="Email"
+      name="email"
+      style="padding-left: 20px;"
+    />
+    <input
+      type="text"
+      placeholder="Số điện thoại"
+      name="phone"
+      style="padding-left: 20px;"
+    />
+    <div class="flex justify-between items-center">
+      <button type="submit">Đăng ký</button>
+      <a class="text-blue-500" href="/account/login">Đăng nhập</a>
+    </div>
+  </form>
+  <div class="image">
+    <img src="/img/logoo.png" width="300px" />
+  </div>
+</div>
