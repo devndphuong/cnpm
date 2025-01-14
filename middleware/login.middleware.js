@@ -4,11 +4,6 @@ module.exports = async function (req, res, next) {
   if (!req.session.isAuthenticated) {
     return res.redirect("/account/login");
   } else {
-    if (!req.session.adminUse) {
-      console.log("Không có");
-
-      return res.redirect("/");
-    }
     if (req.session.adminUse) {
       const user = await db.loadSingle(
         "select * from accounts where username = '" + req.session.adminUse + "'"

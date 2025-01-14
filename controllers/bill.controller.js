@@ -10,6 +10,7 @@ const router = express.Router();
 var accessKey = process.env.ACCESS_KEY;
 var secretKey = process.env.SECRET_KEY;
 
+// Tạo đường dẫn thanh toán
 const createBillUrl = async (req, res) => {
   const { amount = 10000 } = req;
   //https://developers.momo.vn/#/docs/en/aiov2/?id=payment-method
@@ -54,7 +55,7 @@ const createBillUrl = async (req, res) => {
     "&requestType=" +
     requestType;
   //puts raw signature
-  console.log("--------------------RAW SIGNATURE----------------");
+  // console.log("--------------------RAW SIGNATURE----------------");
   //   console.log(rawSignature);
   //signature
   var signature = crypto
@@ -109,6 +110,9 @@ const createBillUrl = async (req, res) => {
 
 const callbackStatusBill = async (req, res) => {
   const { orderId } = req.body;
+  const orderDetail = await db.loadSingle(
+    "select * from orders where payOrderId = '" + orderId + "'"
+  );
 
   const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`;
   const signature = crypto
@@ -134,6 +138,13 @@ const callbackStatusBill = async (req, res) => {
     data: requestBody,
   };
   let result = await axios(options);
+  if (result.data.resultCode === 0 || result.data.resultCode === 9000) {
+    await db.load(
+      "update orders set paymentStatus = 'DONE' where orderNumber = " +
+        orderDetail.orderNumber
+    );
+  }
+
   return res.status(200).json(result.data);
 };
 

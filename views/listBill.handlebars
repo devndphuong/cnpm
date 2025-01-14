@@ -1,0 +1,96 @@
+
+<div class="container-i max-w-[1100px] mx-auto">
+  <div class="w-full">
+    <div class="w-full">
+
+      <div class="w-full">
+        <div class="w-full flex flex-col gap-4 pb-4">
+          <div class="flex w-full justify-between">
+            {{#if empty}}
+              <h1 class="heading-product">Không có đơn hàng nào</h1>
+            {{else}}
+              <h1 class="heading-product">Danh sách đơn hàng</h1>
+            {{/if}}
+          </div>
+            <div class="search-data">
+              <form method="post" action="/bill/listBill" class="flex gap-4 justify-between items-center">
+                <input value="{{email}}" id="emailSearch" class="py-1 px-2 rounded w-full text-2xl focus:outline-none" placeholder="Tìm kiếm đơn hàng theo email" name="email" type="text">
+                <input class="py-1 px-2 rounded text-2xl focus:outline-none bg-white text-black" type="submit" value="Tìm kiếm">
+              </form>
+            </div>
+        </div>
+        <div class="w-full">
+          <div class="container-i">
+            <div id="content">
+              <div class="container_content">
+                <div class="list_orders">
+                  {{#if empty}}{{else}}
+                    <table class="table_orders">
+                      <thead>
+                        <tr class="title-row">
+                          <th>Tên khách hàng</th>
+                          <th>Số ĐT</th>
+                          <th>Email</th>
+                          {{#if (eq checked_paymentMethod "0")}}
+                            <th>Hình thức thanh toán</th>
+                          {{/if}}
+                          <th>Ngày đặt hàng</th>
+                          <th>Trạng thái</th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{#each this.rows}}
+                          <tr class="order_detail">
+                            <td class="describe_product">
+                              {{customerName}}
+                            </td>
+                            <td class="price_product">
+                              <span>{{phone}}</span>
+                            </td>
+                            <td>
+                              {{email}}
+                            </td>
+                            {{#if (eq ../checked_paymentMethod "0")}}
+                              <td class="price_product">
+                                {{#if (eq paymentMethod "cash")}}
+                                <span>Tiền mặt</span>
+                                {{else}}
+                                <span>Chuyển khoản ngân hàng</span>
+                                {{/if}}
+                              </td>
+                            {{/if}}
+                            <td class="price_product">
+                              <span>{{format_date orderDate}}</span>
+                            </td>
+                           
+                            <td class="price_product">
+                              <span>{{status}}</span>
+                            </td>
+                            <td class="recycle">
+                              <a href="/bill/detail/{{orderNumber}}">
+                                <button class="btn btn-secondary" type="button">
+                                  <i
+                                    class="ti-pencil-alt"
+                                    style="color:lime"
+                                  ></i><span style="color:lime"> Chi tiết</span>
+                                </button>
+                              </a>
+                            </td>
+
+                          </tr>
+                        {{/each}}
+                      </tbody>
+                    </table>
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

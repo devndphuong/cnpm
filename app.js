@@ -37,6 +37,38 @@ app.engine(
       format_number: function (value) {
         return numeral(value).format("0,0");
       },
+      format_date: function (value) {
+        const date = new Date(value);
+        if (isNaN(date)) return "Ngày không hợp lệ";
+
+        const options = {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        };
+
+        const formattedDate = new Intl.DateTimeFormat("vi-VN", options).format(
+          date
+        );
+        return formattedDate.replace(",", "");
+      },
+      translateStatus: function (status) {
+        switch (status) {
+          case "DONE":
+            return "Đã thanh toán";
+          case "ERROR":
+            return "Lỗi";
+          default:
+            return "Chưa thanh toán";
+        }
+      },
+      eq: function (a, b) {
+        return a === b;
+      },
     },
   })
 );
@@ -60,6 +92,7 @@ const cartRouter = require("./routes/cart.route");
 const adminRouter = require("./routes/admin.route");
 const accountRouter = require("./routes/account.route");
 const paymentRouter = require("./routes/payment.route");
+const billRouter = require("./routes/bill.route");
 
 app.use("/", appMiddleware, userRouter);
 app.use("/product", appMiddleware, productRouter);
@@ -67,6 +100,7 @@ app.use("/cart", appMiddleware, cartRouter);
 app.use("/admin", loginMiddleware, adminRouter);
 app.use("/account", accountRouter);
 app.use("/payment", paymentRouter);
+app.use("/bill", billRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

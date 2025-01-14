@@ -47,7 +47,7 @@
                 </div>
      
                     <div class="container-i">
-    {{#each this.rows}}
+            {{#each this.rows}}
             <form id="content" method="POST" action="/admin/vieworder/{{orderNumber}}">
                 <div class="container_content">
                     <div class="section_header" id="header-info">
@@ -69,6 +69,12 @@
                                 </label>
                                 <input class="form-control" id="address" type="text" name="address" value="{{address}}">
                             </div>
+                            <div class="form-group">
+                                <label class="title-info">Email
+                                    <span class="required"></span>
+                                </label>
+                                <input class="form-control" id="email" type="email" name="email" value="{{email}}">
+                            </div>
                                 <div class="form-group">
                                     <label class="title-info">Số điện thoại
                                         <span class="required"></span>
@@ -77,10 +83,19 @@
                                 </div>
                                 <div class="form-group note-shipping">
                                     <label class="title-info">Ghi chú về đơn hàng</label>
-                                    <input class="form-control" id="note" type="text" name="note" value="{{note}}"></input>
+                                    <input class="form-control" id="note" type="text" name="note" value="{{comment}}"></input>
                                 </div>
+                                {{!-- <div class="form-group note-shipping">
+                                    <label class="title-info" for="{{sta}}">Trạng thái thanh toán 1</label>
+                                    <select class="form-control" id="{{sta}}" style="background-color:  #1d1d1d; height : 30px" name="stt">
+                                        <option value="1">Đang xử lý</option>
+                                        <option value="2">Đang giao hàng</option>
+                                        <option value="3">Đã hoàn tất</option>
+                                        <option value="4">Bị hủy</option>
+                                    </select>
+                                </div> --}}
                                 <div class="form-group note-shipping">
-                                    <label class="title-info" for="{{sta}}">Trạng thái</label>
+                                    <label class="title-info" for="{{sta}}">Trạng thái đơn hàng</label>
                                     <select class="form-control" id="{{sta}}" style="background-color:  #1d1d1d; height : 30px" name="stt">
                                         <option value="1">Đang xử lý</option>
                                         <option value="2">Đang giao hàng</option>
@@ -88,6 +103,27 @@
                                         <option value="4">Bị hủy</option>
                                     </select>
                                 </div>
+
+                                <div class="form-group note-shipping">
+                                    <label class="title-info" for="{{sta}}">Hình thức thanh toán</label>
+                                    {{#if (eq paymentMethod "cash")}}
+                                        <p class="font-bold px-8" style="background-color:  #1d1d1d; height : 30px" >Tiền mặt</p>
+                                    {{else}}
+                                        <p class="font-bold px-8" style="background-color:  #1d1d1d; height : 30px;" >Chuyển khoản ngân hàng</p>
+                                    {{/if}}
+                                </div>
+
+                                {{#if (eq paymentMethod "bank-transfer")}}
+                                    <div class="form-group note-shipping">
+                                        <label class="title-info" for="{{sta}}">Trạng thái thanh toán</label>
+                                        {{#if (eq paymentStatus "DONE")}}
+                                            <span class="py-1 rounded-full bg-green-500 px-4 text-white">Đã thanh toán</span>
+                                        {{else}}
+                                            <span class="px-2 py-1 rounded-full bg-gray-500 px-4 text-white">Chưa thanh toán</span>
+                                        {{/if}}
+                                    </div>
+                                {{/if}}
+
                         </div>
                     </div>
                     <div class="section_header">
@@ -157,7 +193,7 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>Tổng cần thanh toán: </td>
+                                    <td><span class="text-white font-bold">Tổng cần thanh toán: </span></td>
                                     <td style="color: #ffe11b;">{{format_number sum}} đ</td>
                                 </tr>
                             </tbody>

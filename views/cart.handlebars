@@ -7,6 +7,10 @@
         document.getElementById('button-showinfo').style.display=" none";
     }
 
+    function selectOptionPayment() {
+
+    }
+
     $('#form-Payment').on('submit', function(event) {
         event.preventDefault();
         if (validateOrder()) {
@@ -41,6 +45,7 @@
                     <div class="section_header">
                         <div class="container_section_header">
                             <h2 class="section_title">Thông tin đặt hàng</h2>
+                            <a href="">Tra cứu đơn hàng</a>
                         </div>
                     </div>
 
@@ -103,7 +108,7 @@
                         </table>
                     </div>
 
-                    <div class="shop-back" id="button-showinfo">
+                    <div class="shop-back flex justify-end gap-4" id="button-showinfo">
                         {{#if isOrder}}
                         <button class="btn btn-secondary" style="background-color: white;" onclick="window.location.href='/'">Tiếp tục mua hàng</button>
                         <button class="btn btn-secondary" onclick="getPaymentInfo()"><i class="ti-shopping-cart"></i> Đặt hàng</button>
@@ -132,20 +137,43 @@
                                 </label>
                                 <input class="form-control" id="address" type="text" name="address">
                             </div>
-                                <div class="form-group">
-                                    <label class="title-info">Số điện thoại
-                                        <span class="required">*</span>
-                                    </label>
-                                    <input class="form-control" id="phone" type="text" name="phone">
+                            <div class="form-group">
+                                <label class="title-info">Hình thức thanh toán
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="payment-options">
+                                    <!-- Option 1 -->
+                                    <div class="payment-option">
+                                        <input type="radio" id="bank-transfer" name="paymentMethod" value="bank-transfer" required>
+                                        <label for="bank-transfer">Chuyển khoản ngân hàng</label>
+                                    </div>
+                                    <!-- Option 2 -->
+                                    <div class="payment-option">
+                                        <input type="radio" id="cash" name="paymentMethod" value="cash">
+                                        <label for="cash">Tiền mặt</label>
+                                    </div>
                                 </div>
-                                <div class="form-group note-shipping">
-                                    <label class="title-info">Ghi chú về đơn hàng</label>
-                                    <input class="form-control" id="note" type="text" name="note"></input>
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="title-info">Email
+                                    <span class="required">*</span>
+                                </label>
+                                <input class="form-control" id="email" type="email" name="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="title-info">Số điện thoại
+                                    <span class="required">*</span>
+                                </label>
+                                <input class="form-control" id="phone" type="text" name="phone">
+                            </div>
+                            <div class="form-group note-shipping">
+                                <label class="title-info">Ghi chú về đơn hàng</label>
+                                <input class="form-control" id="note" type="text" name="note"></input>
+                            </div>
 
-                                 <div class="shop-back" id="button-payment" style="display: none" >
-                                    <button class="btn btn-secondary" type="submit"><i class="ti-shopping-cart"></i> Gửi đơn hàng</button>
-                                </div>
+                             <div class="shop-back" id="button-payment" style="display: none" >
+                                <button class="btn btn-secondary" type="submit"><i class="ti-shopping-cart"></i> Gửi đơn hàng</button>
+                            </div>
                         </form>
                     </div>
 

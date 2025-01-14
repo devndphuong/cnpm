@@ -10,10 +10,13 @@ router.get("/login", async function (req, res) {
     title: "Đăng nhập",
   });
 });
+
 router.post("/login", async function (req, res) {
   var check = false;
   // lấy tất cả các account ra để check
-  const rows = await db.load("select * from accounts");
+  const rows = await db.load(
+    "select * from accounts where username = '" + req.body.username + "'"
+  );
   for (var i = 0; i < rows.length; i++) {
     // nếu mà user + pass đúng thì cho true rồi chuyển về trang chủ
     if (rows[i].username == req.body.username) {
@@ -25,6 +28,7 @@ router.post("/login", async function (req, res) {
       }
     }
   }
+
   if (check) {
     return res.redirect("/admin");
   } else {
@@ -69,10 +73,7 @@ router.post("/register", async function (req, res) {
   });
 
   if (result) {
-    return res.render("adminLogin", {
-      layout: "login.handlebars",
-      msg: "Đăng ký thành công vui lòng điền thông tin đăng nhập.",
-    }); // Chuyển hướng về trang đăng nhập sau khi đăng ký thành công
+    return res.redirect("/account/login"); // Chuyển hướng về trang đăng nhập sau khi đăng ký thành công
   } else {
     return res.render("registerUser", {
       layout: "login.handlebars",

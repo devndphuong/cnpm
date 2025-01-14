@@ -1,7 +1,41 @@
 {{#section "js"}}
   <script>
+    function handleSearch(e) {
+      const emailInput = document.getElementById("emailSearch");
+      const emailValue = emailInput.value;
+      if(emailValue === ""){
+          const currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set('email', emailValue);
+          window.location.href = currentUrl.href;
+          return;
+      }
+
+      const emailRegex = /^[a-zA-Z0-9+-]+([.-_][a-zA-Z0-9+-]+)*$/;
+
+      if (!emailRegex.test(emailValue)) {
+        alert("Vui lòng nhập email hợp lệ.");
+        
+        emailInput.setCustomValidity("Từ khóa không hợp lệ!");
+        emailInput.reportValidity();
+
+        emailInput.value = '';
+          const currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set('email', "");
+          window.location.href = currentUrl.href;
+      } else {
+        emailInput.setCustomValidity("");
+      }
+      if (emailRegex.test(emailValue)) {
+          const currentUrl = new URL(window.location.href);
+          currentUrl.searchParams.set('email', emailValue);
+          window.location.href = currentUrl.href;
+    }
+    }
+
     var select = document.getElementsByClassName('select-box')[0].id; var slt =
-    document.getElementById(select); slt.selectedIndex = select;
+    document.getElementById(select); slt.selectedIndex = select; var selects =
+    document.getElementsByClassName('select-box-method')[0].id;var sltMethod =
+    document.getElementById(selects); sltMethod.selectedIndex = selects;
   </script>
 {{/section}}
 
@@ -34,32 +68,70 @@
       </div>
 
       <div class="grid__column_2">
-        <div class="grid__row grid__full-width">
-          {{#if empty}}
-            <h1 class="heading-product">Không có đơn hàng nào</h1>
-          {{else}}
-            <h1 class="heading-product">Danh sách đơn hàng</h1>
-          {{/if}}
-          <div class="sort-product">
-            <div class="custom-select" style="width:200px;">
-              <select
-                class="select-box"
-                id="{{checked_status}}"
-                onchange="window.location.href=this.value"
-              >
-                <option id="0" value="/admin?day={{day}}">Tất cả đơn hàng</option>
-                <option id="1" value="/admin?status=Đang xử lý&day={{day}}">Đang
-                  xử lý</option>
-                <option
-                  id="2"
-                  value="/admin?status=Đang giao hàng&day={{day}}"
-                >Đang giao hàng</option>
-                <option id="3" value="/admin?status=Đã hoàn tất&day={{day}}">Đã
-                  hoàn tất</option>
-                <option id="4" value="/admin?status=Bị hủy&day={{day}}">Bị hủy</option>
-              </select>
+        <div class="w-full flex flex-col gap-4 pb-4">
+          <div class="flex w-full justify-between">
+            {{#if empty}}
+              <h1 class="heading-product">Không có đơn hàng nào</h1>
+            {{else}}
+              <h1 class="heading-product">Danh sách đơn hàng</h1>
+            {{/if}}
+            <div class="sort-product">
+
+              <!-- Thêm phần select cho paymentMethod -->
+              <div class="custom-select mr-40" style="width:200px;">
+                <select
+                  class="select-box-method"
+                  id="{{checked_paymentMethod}}"
+                  onchange="window.location.href=this.value"
+                >
+                  <option id="0" value="/admin?day={{day}}&status={{status}}">Tất
+                    cả phương thức thanh toán</option>
+                  <option
+                    id="1"
+                    value="/admin?day={{day}}&status={{status}}&paymentMethod=cash"
+                  >Thanh toán tiền mặt</option>
+                  <option
+                    id="2"
+                    value="/admin?day={{day}}&status={{status}}&paymentMethod=bank-transfer"
+                  >Chuyển khoản ngân hàng</option>
+                </select>
+              </div>
+              <div class="custom-select" style="width:200px;">
+                <select
+                  class="select-box"
+                  id="{{checked_status}}"
+                  onchange="window.location.href=this.value"
+                >
+                  <option
+                    id="0"
+                    value="/admin?day={{day}}&paymentMethod={{paymentMethod}}"
+                  >Tất cả đơn hàng</option>
+                  <option
+                    id="1"
+                    value="/admin?status=Đang xử lý&day={{day}}&paymentMethod={{paymentMethod}}"
+                  >Đang xử lý</option>
+                  <option
+                    id="2"
+                    value="/admin?status=Đang giao hàng&day={{day}}&paymentMethod={{paymentMethod}}"
+                  >Đang giao hàng</option>
+                  <option
+                    id="3"
+                    value="/admin?status=Đã hoàn tất&day={{day}}&paymentMethod={{paymentMethod}}"
+                  >Đã hoàn tất</option>
+                  <option
+                    id="4"
+                    value="/admin?status=Bị hủy&day={{day}}&paymentMethod={{paymentMethod}}"
+                  >Bị hủy</option>
+                </select>
+              </div>
             </div>
           </div>
+            <div class="search-data">
+              <div class="flex gap-4 justify-between items-center">
+                <input value="{{email}}" id="emailSearch" class="py-1 px-2 rounded w-full text-2xl focus:outline-none" placeholder="Tìm kiếm đơn hàng theo email" name="email" type="text">
+                <input onclick="handleSearch(event)" class="py-1 px-2 rounded text-2xl focus:outline-none bg-white text-black" type="submit" value="Tìm kiếm">
+              </div>
+            </div>
         </div>
         <div class="grid__column_10">
           <div class="container-i">
@@ -72,9 +144,11 @@
                         <tr class="title-row">
                           <th>Tên khách hàng</th>
                           <th>Số ĐT</th>
-                          <th>Địa chỉ</th>
+                          <th>Email</th>
+                          {{#if (eq checked_paymentMethod "0")}}
+                            <th>Hình thức thanh toán</th>
+                          {{/if}}
                           <th>Ngày đặt hàng</th>
-                          <th>Ghi chú</th>
                           <th>Trạng thái</th>
                           <th></th>
                           <th></th>
@@ -90,21 +164,24 @@
                               <span>{{phone}}</span>
                             </td>
                             <td>
-                              {{address}}
+                              {{email}}
                             </td>
+                            {{#if (eq ../checked_paymentMethod "0")}}
+                              <td class="price_product">
+                                {{#if (eq paymentMethod "cash")}}
+                                <span>Tiền mặt</span>
+                                {{else}}
+                                <span>Chuyển khoản ngân hàng</span>
+                                {{/if}}
+                              </td>
+                            {{/if}}
                             <td class="price_product">
-                              <span>{{orderDate}}</span>
+                              <span>{{format_date orderDate}}</span>
                             </td>
-                            <td class="price_total">
-                              <div
-                                class="cl--primary"
-                                style="color:#ffe11b"
-                              >{{comment}}</div>
-                            </td>
+                           
                             <td class="price_product">
                               <span>{{status}}</span>
                             </td>
-
                             <td class="recycle">
                               <a href="/admin/vieworder/{{orderNumber}}">
                                 <button class="btn btn-secondary" type="button">
@@ -143,89 +220,3 @@
     </div>
   </div>
 </div>
-
-{{!-- <div class="container-i">
-            <div id="content">
-                <div class="container_content">
-                    <div class="grid__row  grid__full-width">
-                        {{#if empty}}
-                            <h1 class="heading-product" style="color: white;">Không có đơn hàng nào</h1>
-                        {{else}}
-                            <h1 class="heading-product">Danh sách đơn hàng</h1>
-                        {{/if}}
-                            <div class="sort-product">
-                                <div class="custom-select" style="width:200px;">
-                                    <select class="select-box" onchange="window.location.href=this.value">
-                                      <option value="/admin?day={{day}}">Tất cả đơn hàng</option>
-                                      <option value="/admin?status=đang xử lý&day={{day}}">Đang xử lý</option>
-                                      <option value="/admin?status=đang giao hàng&day={{day}}">Đang giao hàng</option>
-                                      <option value="/admin?status=đã hoàn tất&day={{day}}">Đã hoàn tất</option>
-                                      <option value="/admin?status=bị hủy&day={{day}}">Bị hủy</option>
-                                    </select>
-                                  </div>
-                            </div>
-                        </div>
-
-                    <div class="list_orders">
-                        {{#if empty}}
-                        {{else}}
-                        <table class="table_orders">
-                            <thead>
-                                <tr class="title-row">
-                                    <th>Tên khách hàng</th>
-                                    <th>Số ĐT</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Ngày đặt hàng</th>
-                                    <th>Ghi chú</th>
-                                    <th>Trạng thái</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each this.rows}}
-                                <tr class="order_detail">
-                                    <td class="describe_product">
-                                        {{customerName}}
-                                    </td>
-                                    <td class="price_product">
-                                        <span>{{phone}}</span>
-                                    </td>
-                                    <td>
-                                        {{address}}
-                                    </td>
-                                    <td class="price_product">
-                                        <span>{{orderDate}}</span>
-                                    </td>
-                                    <td class="price_total">
-                                        <div class="cl--primary" style="color:#ffe11b">{{comment}}</div>
-                                    </td>
-                                    <td class="price_product">
-                                        <span>{{status}}</span>
-                                    </td>
-                                    
-                                    <td class="recycle">
-                                        <a href="/admin/vieworder/{{orderNumber}}">
-                                            <button class="btn btn-secondary" type="button">
-                                                <i class="ti-pencil-alt" style="color:lime"></i><span style="color:lime"> Chi tiết</span>
-                                            </button>
-                                        </a>
-                                    </td>
-
-                                    <td class="recycle">
-                                        <a href="/admin/delete?id={{orderNumber}}">
-                                            <button class="btn btn-secondary" type="button" onclick="return confirm('Bạn có chắc muốn xóa bỏ đơn hàng này?')">
-                                                <i class="ti-trash"></i><span>Xoá</span>
-                                            </button>
-                                        </a>
-                                    </td>
-                                    
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                        </table>
-                        {{/if}}
-                    </div>
-                </div>
-            </div>
-       </div> --}}

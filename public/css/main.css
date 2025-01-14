@@ -92,7 +92,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 25px calc((100% - 1110px) / 2);
+  /* padding: 25px calc((100% - 1110px) / 2); */
 }
 
 .header .logo-shop {
@@ -215,7 +215,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px calc((100% - 1110px) / 2);
+  /* padding: 6px calc((100% - 1110px) / 2); */
   position: relative;
 }
 

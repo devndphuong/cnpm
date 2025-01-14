@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { default: axios } = require("axios");
 const crypto = require("crypto");
+const db = require("../utils/database");
 
 const {
   createBillUrl,
