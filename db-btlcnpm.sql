@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 24, 2022 lúc 05:18 PM
--- Phiên bản máy phục vụ: 10.4.22-MariaDB
--- Phiên bản PHP: 8.1.2
+-- Host: 127.0.0.1
+-- Generation Time: Jan 15, 2025 at 02:41 AM
+-- Server version: 11.5.2-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,50 +18,75 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `qlbh`
+-- Database: `db-btlcnpm`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `accounts`
+-- Table structure for table `accounts`
 --
 
 CREATE TABLE `accounts` (
   `username` varchar(20) NOT NULL,
-  `password` varchar(100) NOT NULL DEFAULT '$2a$08$K2MVB1zxjAi/2YsB7nfvYONGP3lE6HL4Sp4Xy2jhLksFM6ENKfs0K'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `password` varchar(100) NOT NULL DEFAULT '$2a$08$K2MVB1zxjAi/2YsB7nfvYONGP3lE6HL4Sp4Xy2jhLksFM6ENKfs0K',
+  `fullname` varchar(50) NOT NULL,
+  `role` varchar(50) NOT NULL DEFAULT 'USERS',
+  `phone` int(11) DEFAULT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `accounts`
+-- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`username`, `password`) VALUES
-('Admin', '$2a$08$aeSXcOIPx8iQ7SbOnMHoWet0rU1fNsBtvj37QgCesMgbnJ5p4ZiSW'),
-('Admin1', '$2a$08$VtjNyEiv.3a5TzG0mYzOWe25iKZOAGouqqmWH7AyIU.MR42n7s2x6');
+INSERT INTO `accounts` (`username`, `password`, `fullname`, `role`, `phone`, `email`) VALUES
+('Admin', '$2a$08$aeSXcOIPx8iQ7SbOnMHoWet0rU1fNsBtvj37QgCesMgbnJ5p4ZiSW', 'Admin', 'ADMINS', NULL, ''),
+('Admin1', '$2a$08$VtjNyEiv.3a5TzG0mYzOWe25iKZOAGouqqmWH7AyIU.MR42n7s2x6', 'ADMIN1', 'ADMINS', NULL, ''),
+('devdpcio', '$2a$10$SMaLY22YWOZbEHKvtpYXwOKFqe/pRyPaCH7FPvKNJbrde6tktb/P2', 'nguyen Dac Phuong', 'USERS', 983838773, 'ndphuong@gmail.com'),
+('devndphuong', '$2a$10$.yeKqr8V7olp7Zd7Yaj8feMeszyGg8bA7kzc5U6ugm7MTnrSDf2Ga', 'Nguyễn Đắc Phương', 'USERS', 969674554, 'devndphuong@gmail.com'),
+('Nguyen Dac Phuong', '$2a$10$l.TmGkW0vrkKKGI168Db7OAFAxJ.Q/B6ru/v0dN8BzseQdblN4HZy', 'demo', 'USERS', 999888887, 'demo1@gmail.com'),
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `customers`
+-- Table structure for table `customers`
 --
 
 CREATE TABLE `customers` (
   `customerID` int(11) NOT NULL,
   `accessDate` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `customers`
+-- Dumping data for table `customers`
 --
 
 INSERT INTO `customers` (`customerID`, `accessDate`) VALUES
-(71374997, '2022-05-24 21:01:18');
+(14152591, '2025-01-15 00:20:20'),
+(17099133, '2025-01-14 14:02:15'),
+(20439312, '2025-01-14 23:46:56'),
+(35549067, '2025-01-15 04:56:53'),
+(45124349, '2025-01-14 13:59:52'),
+(46950017, '2025-01-14 13:23:41'),
+(48313609, '2025-01-15 00:25:24'),
+(48663605, '2025-01-14 11:22:24'),
+(49070448, '2025-01-14 11:27:17'),
+(52102848, '2025-01-15 04:59:05'),
+(64732529, '2025-01-14 13:33:46'),
+(65951316, '2025-01-14 13:20:31'),
+(73980045, '2025-01-15 04:41:22'),
+(78043644, '2025-01-15 00:28:49'),
+(81391314, '2025-01-14 10:43:41'),
+(84088122, '2025-01-14 23:32:30'),
+(91161601, '2025-01-14 23:46:19'),
+(91914426, '2025-01-14 14:16:34'),
+(109175936, '2025-01-14 23:40:14');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `customer_product`
+-- Table structure for table `customer_product`
 --
 
 CREATE TABLE `customer_product` (
@@ -69,12 +94,12 @@ CREATE TABLE `customer_product` (
   `productId` int(11) NOT NULL,
   `size` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `orderdetails`
+-- Table structure for table `orderdetails`
 --
 
 CREATE TABLE `orderdetails` (
@@ -83,47 +108,42 @@ CREATE TABLE `orderdetails` (
   `quantity` int(11) NOT NULL,
   `priceEach` int(11) NOT NULL,
   `size` int(11) NOT NULL DEFAULT 39
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `orderdetails`
+-- Dumping data for table `orderdetails`
 --
 
 INSERT INTO `orderdetails` (`orderNumber`, `productID`, `quantity`, `priceEach`, `size`) VALUES
-(81989779, 23, 1, 1300000, 42),
-(88549843, 16, 1, 1800000, 42),
-(88549843, 11, 1, 1400000, 40),
-(88549843, 11, 1, 1400000, 42),
-(36742581, 10, 3, 2900000, 41),
-(36742581, 11, 3, 1400000, 43),
-(36742581, 12, 3, 2200000, 42),
-(36742581, 14, 3, 2600000, 38),
-(25880056, 12, 1, 2200000, 42),
-(62555872, 12, 1, 2200000, 42),
-(62555872, 12, 1, 2200000, 43),
-(62555872, 38, 10, 3100000, 42),
-(62555872, 12, 5, 2200000, 42),
-(98185752, 40, 1, 1899000, 42),
-(98185752, 40, 1, 1899000, 39),
-(98185752, 12, 1, 2200000, 41),
-(98185752, 18, 3, 1850000, 42),
-(63576691, 12, 1, 2200000, 42),
-(63576691, 14, 1, 2600000, 42),
-(98185752, 54, 1, 4200000, 43),
-(63576691, 18, 7, 1850000, 42),
-(63596731, 14, 1, 2600000, 43),
-(63596731, 47, 1, 2850000, 40),
-(45467453, 22, 1, 2400000, 42),
-(47101840, 21, 10, 1850000, 42),
-(47101840, 47, 5, 2850000, 40),
-(47101840, 57, 1, 1400000, 43),
-(79684343, 10, 1, 2999999, 41),
-(102873209, 14, 1, 2600000, 41);
+(58203708, 10, 1, 2999999, 39),
+(58203708, 10, 1, 2999999, 40),
+(54123530, 20, 1, 5000000, 40),
+(55420062, 10, 1, 2999999, 39),
+(10086577, 10, 1, 2999999, 40),
+(10086577, 12, 1, 2200000, 41),
+(55493046, 11, 1, 3999999, 40),
+(10108964, 10, 6, 2999999, 40),
+(10108964, 18, 1, 1850000, 38),
+(10108964, 22, 1, 2400000, 44),
+(58016429, 10, 1, 2999999, 40),
+(58016429, 11, 1, 3999999, 41),
+(58016429, 20, 4, 5000000, 43),
+(92438617, 12, 1, 2200000, 40),
+(92438617, 20, 5, 5000000, 40),
+(92438617, 42, 1, 6000000, 41),
+(103171988, 11, 1, 3999999, 41),
+(103171988, 22, 1, 2400000, 40),
+(15487330, 11, 6, 3999999, 40),
+(15487330, 21, 1, 1850000, 40),
+(13330456, 10, 1, 2999999, 40),
+(82498579, 10, 1, 2999999, 39),
+(82498579, 14, 1, 2600000, 40),
+(88804255, 10, 1, 2999999, 40);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `orders`
+-- Table structure for table `orders`
 --
 
 CREATE TABLE `orders` (
@@ -131,44 +151,50 @@ CREATE TABLE `orders` (
   `customerID` int(11) NOT NULL,
   `customerName` varchar(255) NOT NULL,
   `phone` varchar(12) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `address` varchar(500) NOT NULL,
   `orderDate` datetime NOT NULL,
   `comment` varchar(500) DEFAULT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'Đang xử lý'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `status` varchar(255) NOT NULL DEFAULT 'Đang xử lý',
+  `paymentMethod` varchar(50) NOT NULL DEFAULT 'cash',
+  `paymentStatus` varchar(255) DEFAULT NULL,
+  `payOrderId` varchar(50) DEFAULT NULL,
+  `payUrl` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `orders`
+-- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderNumber`, `customerID`, `customerName`, `phone`, `address`, `orderDate`, `comment`, `status`) VALUES
-(25880056, 90692353, 'Quách Văn Quẹ', '0999999999', 'Ba Vì - Hà Nội', '2022-05-09 00:00:00', 'Không', 'Đã hoàn tất'),
-(36742581, 50833011, 'Tạ Văn Tấn', '0999999999', 'Gò Vấp', '2022-05-01 00:00:00', 'Không', 'Đã hoàn tất'),
-(45467453, 89958823, 'Nguyễn Văn A', '0332133188', 'Ba Vì - Hà Nội', '2022-05-21 00:00:00', 'Không', 'Đã hoàn tất'),
-(47101840, 106424870, 'Nguyễn Văn A Đồng', '0963712656', 'Ba Vì - Hà Nội', '2022-05-23 00:00:00', 'Không', 'Đã hoàn tất'),
-(62555872, 80571211, 'Quách Văn Quẹ', '0963712656', 'ba vi', '2022-05-15 00:00:00', 'Không', 'Đang xử lý'),
-(63576691, 96894360, 'TEst 18/5', '0963712222', 'Ba Vì - Hà Nội', '2022-05-18 00:00:00', 'Không', 'Đã hoàn tất'),
-(63596731, 89958823, 'Nguyễn Văn B', '0963712656', 'Ba Vì - Hà Nội', '2022-05-21 00:00:00', 'Không', 'Đang giao hàng'),
-(79684343, 106424870, 'Quách Văn Quẹ', '0963712656', 'Ba Vì - Hà Nội', '2022-05-23 00:00:00', 'Không', 'Đang xử lý'),
-(81989779, 73109347, 'Nguyễn Văn A', '0963712656', 'Hà Nội', '2022-04-21 00:00:00', 'Không', 'Đã hoàn tất'),
-(88549843, 82788225, 'Quách Văn Quẹ', '0963712656', 'Ba Vì - Hà Nội', '2022-05-01 00:00:00', 'Không', 'Đang xử lý'),
-(98185752, 96894360, 'do cong dong', '0963712656', 'ba vi ha noi', '2022-05-18 00:00:00', 'Không', 'Đã hoàn tất'),
-(102873209, 106424870, 'do cong dong', '0963712656', 'Hà Nội', '2022-05-23 22:05:48', 'Không', 'Đang xử lý');
+INSERT INTO `orders` (`orderNumber`, `customerID`, `customerName`, `phone`, `email`, `address`, `orderDate`, `comment`, `status`, `paymentMethod`, `paymentStatus`, `payOrderId`, `payUrl`) VALUES
+(10086577, 45124349, 'Nguyễn Đắc Đỗ', '0989888887', '', 'Tỳ Điện - Phú Hòa - Lương Tài - Bắc Ninh', '2025-01-14 14:00:55', 'Oke', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736838054757', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjgzODA1NDc1Nw&s=3ebe57d922cbf7be409b98c9721a6212aa72a04571877543182f47de0e243666'),
+(10108964, 45124349, 'Nguyen Dac Phuong', '0888989998', '', 'Ty Dien - Phu Hoa - Luong Tai', '2025-01-14 15:19:53', 'Oke', 'Đang xử lý', 'cash', 'null', 'MOMO1736842792971', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjg0Mjc5Mjk3MQ&s=f1d07d9b0942c04b350325a033a27a9109104e7f229d521a673bf68f45295209'),
+(13330456, 109175936, 'Nguyễn Thị Quỳnh', '0988888787', '', 'Lương Tài - Bắc Ninh', '2025-01-15 00:28:03', 'Oke nhé', 'Đang xử lý', 'bank-transfer', 'DONE', 'MOMO1736875682906', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjg3NTY4MjkwNg&s=39e3b6b25ab9684433b4860dd03ecb3afd0a3f52ad1cf41de82c2f0d9cfe92cb'),
+(15487330, 109175936, 'Nguyễn Đắc Phương', '0989888887', '', 'Tỳ Điện Phú Hòa Lương Tài', '2025-01-15 00:23:45', 'Oke chưa', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736875425481', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjg3NTQyNTQ4MQ&s=b42ea2e25af2114c3459d80445d18cf66a5dced3fdacaa5ec6a598356d31cc2e'),
+(54123530, 48663605, 'Nguyễn Đắc Phương', '0989888876', '', 'Bắc Ninh', '2025-01-14 11:23:13', 'Không', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736828593379', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjgyODU5MzM3OQ&s=b229a3a1ec4d449d69cf725484c8fc77df62660fc15459c28a37bb6e70a1563c'),
+(55420062, 46950017, 'Nguyễn Đắc Phương', '0969645534', '', 'Lương Tài - Bắc Ninh', '2025-01-14 13:33:07', 'Thanh toán online', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736836387660', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjgzNjM4NzY2MA&s=623e6be5716c9b52ad53fafe2e6a197e91693d3c54c64f62bdcbde602ad1f06b'),
+(55493046, 45124349, 'Nguyen Van Danh', '0989888887', '', 'Phú Hòa', '2025-01-14 14:15:45', 'Ghi chú', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736838945231', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjgzODk0NTIzMQ&s=6433fc562aecdd5ab2b4ae49225e5355ea4e7896f085e8935b66b6552784de8a'),
+(58016429, 84088122, 'Nguyen Dac Phuong', '0968647746', '', 'Ty Dien Luong Tai Bac Ninh', '2025-01-14 23:36:50', 'Oke', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736872610061', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjg3MjYxMDA2MQ&s=33eb72a31e0013a7e70ec953c185713a1402321df5a0bcfbdef7351daedf37f0'),
+(58203708, 13278309, 'Nguyen van B', '0988888776', 'dacphuongotp@gmail.com', 'bac Ninh', '2025-01-14 11:14:16', 'Đã cập nhật', 'Đang xử lý', 'cash', 'null', 'undefined', 'undefined'),
+(82498579, 109175936, 'Nguyễn Van Phong', '0988877764', 'devndphuong@gmail.com', 'Cầu Giấy - Hà Nội', '2025-01-15 04:55:35', 'Ghi chú', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736891734866', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjg5MTczNDg2Ng&s=f2fa86f3c6d3d2d1a3016b665f75a643bf4f62ebafb00f8711cc3f250cd27842'),
+(88804255, 109175936, 'Anh Vương', '0988887776', 'devndphuong@gmail.com', 'Hưng Yên', '2025-01-15 04:58:36', 'Oke', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736891916107', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjg5MTkxNjEwNw&s=c2c74a60302331b9ca28d250f0ae40f75b19beb4e771c2fc4ca6cfaacb65cb35'),
+(92438617, 109175936, 'Nguyen Dac Phuong', '0989888887', '', 'Ty Dien Phu Hoa Luong Tai Bac Ninh', '2025-01-14 23:45:04', 'Oke', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736873104672', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjg3MzEwNDY3Mg&s=56da4e3003bf9a2b582fa068ecd985ee917c3eab99e4936fa8b3cb59e910a287'),
+(103171988, 109175936, 'Nguyen Dac Phuong', '0989888888', '', 'Luong Tai Bac Ninh', '2025-01-15 00:18:20', 'Không có', 'Đang xử lý', 'bank-transfer', 'PENDING', 'MOMO1736875100692', 'https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTczNjg3NTEwMDY5Mg&s=c5c0891a9b103b2cba4684c921653debfd78536573850edc7cf1d2dacc1a7941');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `productdetails`
+-- Table structure for table `productdetails`
 --
 
 CREATE TABLE `productdetails` (
   `productID` int(11) NOT NULL,
   `size` int(11) NOT NULL,
   `quantityInStock` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `productdetails`
+-- Dumping data for table `productdetails`
 --
 
 INSERT INTO `productdetails` (`productID`, `size`, `quantityInStock`) VALUES
@@ -498,7 +524,7 @@ INSERT INTO `productdetails` (`productID`, `size`, `quantityInStock`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `productimages`
+-- Table structure for table `productimages`
 --
 
 CREATE TABLE `productimages` (
@@ -508,10 +534,10 @@ CREATE TABLE `productimages` (
   `view2` varchar(100) DEFAULT NULL,
   `view3` varchar(100) DEFAULT NULL,
   `view4` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `productimages`
+-- Dumping data for table `productimages`
 --
 
 INSERT INTO `productimages` (`productID`, `main`, `view1`, `view2`, `view3`, `view4`) VALUES
@@ -574,7 +600,7 @@ INSERT INTO `productimages` (`productID`, `main`, `view1`, `view2`, `view3`, `vi
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `products`
+-- Table structure for table `products`
 --
 
 CREATE TABLE `products` (
@@ -586,10 +612,10 @@ CREATE TABLE `products` (
   `style` varchar(100) DEFAULT NULL,
   `quantitySold` int(11) NOT NULL DEFAULT 0,
   `status` varchar(100) NOT NULL DEFAULT 'SELLING'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `products`
+-- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`productID`, `productBrand`, `productName`, `productDescription`, `productPrice`, `style`, `quantitySold`, `status`) VALUES
@@ -657,101 +683,101 @@ INSERT INTO `products` (`productID`, `productBrand`, `productName`, `productDesc
 (74, 'Kamito', 'Kamito TA11 TF- Hồng/Trắng', 'Giày bóng đá Kamito TA11 TF- Hồng/Trắng KMA220172, mã sản phẩm KMA220172, giày đá bóng Kamito TA11, model giày bóng đá tốt nhất ở phân khúc giá dưới 1 triệu đồng tại Việt Nam dành cho sân cỏ nhân tạo. Chỉ với một ngân sách vừa phải anh em có thể sắm được sản phẩm tốt, đáp ứng đầy đủ nhu cầu chơi bóng cơ bản. Giày Kamito TA11 là thương hiệu chính hãng của Việt Nam chúng ta. Chữ TA11 viết tắt tên cầu thủ Nguyễn Tuấn Anh mang số áo 11, và nhằm tôn vinh cho những đóng góp của anh.', 690000, 'TF, Cỏ nhân tạo', 0, 'SELLING');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `accounts`
+-- Indexes for table `accounts`
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`username`);
 
 --
--- Chỉ mục cho bảng `customers`
+-- Indexes for table `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`customerID`);
 
 --
--- Chỉ mục cho bảng `customer_product`
+-- Indexes for table `customer_product`
 --
 ALTER TABLE `customer_product`
   ADD PRIMARY KEY (`customerID`,`productId`,`size`) USING BTREE,
   ADD KEY `fk_customercart_products` (`productId`);
 
 --
--- Chỉ mục cho bảng `orderdetails`
+-- Indexes for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
   ADD KEY `fk_orderdetails_orders` (`orderNumber`),
   ADD KEY `fk_orderdetails_products` (`productID`);
 
 --
--- Chỉ mục cho bảng `orders`
+-- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`orderNumber`);
 
 --
--- Chỉ mục cho bảng `productdetails`
+-- Indexes for table `productdetails`
 --
 ALTER TABLE `productdetails`
   ADD KEY `fk_productdetails_products` (`productID`);
 
 --
--- Chỉ mục cho bảng `productimages`
+-- Indexes for table `productimages`
 --
 ALTER TABLE `productimages`
   ADD PRIMARY KEY (`productID`);
 
 --
--- Chỉ mục cho bảng `products`
+-- Indexes for table `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`productID`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `orders`
+-- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102873210;
+  MODIFY `orderNumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105496936;
 
 --
--- AUTO_INCREMENT cho bảng `products`
+-- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
   MODIFY `productID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `customer_product`
+-- Constraints for table `customer_product`
 --
 ALTER TABLE `customer_product`
   ADD CONSTRAINT `fk_customercart_customers` FOREIGN KEY (`customerID`) REFERENCES `customers` (`customerID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_customercart_products` FOREIGN KEY (`productId`) REFERENCES `products` (`productID`);
 
 --
--- Các ràng buộc cho bảng `orderdetails`
+-- Constraints for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
   ADD CONSTRAINT `fk_orderdetails_orders` FOREIGN KEY (`orderNumber`) REFERENCES `orders` (`orderNumber`),
   ADD CONSTRAINT `fk_orderdetails_products` FOREIGN KEY (`productID`) REFERENCES `products` (`productID`);
 
 --
--- Các ràng buộc cho bảng `productdetails`
+-- Constraints for table `productdetails`
 --
 ALTER TABLE `productdetails`
   ADD CONSTRAINT `fk_productdetails_products` FOREIGN KEY (`productID`) REFERENCES `products` (`productID`) ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `productimages`
+-- Constraints for table `productimages`
 --
 ALTER TABLE `productimages`
   ADD CONSTRAINT `fk_productimages_products` FOREIGN KEY (`productID`) REFERENCES `products` (`productID`) ON UPDATE CASCADE;

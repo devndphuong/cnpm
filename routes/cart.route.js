@@ -30,7 +30,7 @@ router.get("/", async function (req, res) {
     //product[0].main = image[0].main;
     // xem còn order được nữa không? mỗi khách chỉ được tạo tối đa 2 đơn 1 ngày!
     var isOrder = true;
-    if (maxOrder[0].count >= 10) {
+    if (maxOrder[0].count >= 3) {
       isOrder = false;
     }
     var sum = 0;

@@ -101,6 +101,14 @@
             }}
             đ</span></p>
       </div>
+
+      {{#unless (eq orderDetail.paymentMethod "cash")}}
+          {{#unless (eq orderDetail.paymentStatus "DONE")}}
+            <a href="{{orderDetail.payUrl}}" class=""><h3
+                class="trademark bg-green-400 font-bold py-1 px-2 rounded"
+              >Thanh Toán Ngay</h3></a>
+           {{/unless}}
+      {{/unless}}
     </div>
   </div>
 </div>
